@@ -6,7 +6,7 @@ config = dotenv_values(".env")
 keep_writing = True
 openai.api_key = config['API_KEY']
 
-# Using AI Voice to read the text using creating a file
+# Using AI Voice to read the text by creating a .mp3 file
 
 def textToSpeech(retrieve_blog):        
     response = openai.audio.speech.create(
