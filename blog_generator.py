@@ -1,4 +1,5 @@
 import openai
+from os import remove
 from dotenv import dotenv_values
 from playsound import playsound
 
@@ -6,7 +7,7 @@ config = dotenv_values(".env")
 keep_writing = True
 openai.api_key = config['API_KEY']
 
-# Using AI Voice to read the text using creating a file
+# Using AI Voice to read the text by creating a .mp3 file
 
 def textToSpeech(retrieve_blog):        
     response = openai.audio.speech.create(
@@ -31,10 +32,11 @@ def generate_blog(paragraph_topic):
     retrieve_blog = response.choices[0].text    
     return retrieve_blog
 
-texto = generate_blog("Music")
-textToSpeech(texto)
-print(texto)
+generated_text = generate_blog("Music")
+textToSpeech(generated_text)
+print(generated_text)
 playsound("output.mp3")
+remove("output.mp3")
 
 
 # Asking if program should keep writing other paragraph
@@ -46,7 +48,8 @@ while(keep_writing == True):
         texto = generate_blog(paragraph_topic)
         textToSpeech(texto)
         print(texto)
-        playsound("output.mp3")        
+        playsound("output.mp3") 
+        remove("output.mp3")       
         
     else:
         keep_writing = False
